@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Box, Tabs, Tab } from '@mui/material';
+import { Box, Tabs, Tab } from '@mui/material';
 import { useState } from 'react';
 import FeedbackInfoPair from './FeedbackInfoPair';
 

@@ -1,6 +1,13 @@
-import { Typography, Stack } from '@mui/material';
-import Interview from './Interview';
+'use client';
 
-export default async function Page() {
+import dynamic from 'next/dynamic';
+
+// Dynamically import Interview component with no SSR
+const Interview = dynamic(() => import('./Interview'), {
+  ssr: false,
+  loading: () => null
+});
+
+export default function Page() {
   return <Interview />;
 }

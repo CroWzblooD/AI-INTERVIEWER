@@ -1,5 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { NextResponse } from 'next/server';
+
 
 // Note: Gemini doesn't support text-to-speech directly
 // You'll need to use Google Cloud Text-to-Speech API instead

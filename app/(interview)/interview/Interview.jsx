@@ -15,7 +15,7 @@ import {
   Fade,
   IconButton,
 } from '@mui/material';
-import ReplayIcon from '@mui/icons-material/Replay';
+
 import ArrowForward from '@mui/icons-material/ChevronRightRounded';
 import GraphicEqRoundedIcon from '@mui/icons-material/GraphicEqRounded';
 import CallEndRoundedIcon from '@mui/icons-material/CallEndRounded';
