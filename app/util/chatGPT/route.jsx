@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { StreamingTextResponse } from 'ai';
+import { NextResponse } from 'next/server';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -168,59 +168,13 @@ export async function POST(request) {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    let text = response.text();
+    const text = response.text();
 
-    // For feedback type, ensure the response is valid JSON
-    if (queryType === 'feedback') {
-      try {
-        // Validate JSON structure
-        JSON.parse(text);
-      } catch (e) {
-        // If JSON is invalid, create a default structured response
-        text = JSON.stringify({
-          "strengths": {
-            "General Feedback": "Your answer showed good effort",
-          },
-          "improvements": {
-            "General Suggestion": "Consider providing more specific examples"
-          }
-        });
-      }
-    }
-
-    // Create a ReadableStream from the text
-    const readable = new ReadableStream({
-      start(controller) {
-        controller.enqueue(text);
-        controller.close();
-      },
-    });
-
-    return new StreamingTextResponse(readable);
+    // Simple text response
+    return new Response(text);
+    
   } catch (error) {
     console.error('Error generating content:', error);
-    
-    // Return structured error response for feedback type
-    if (queryType === 'feedback') {
-      const errorResponse = JSON.stringify({
-        "strengths": {
-          "Response Error": "Unable to analyze response at this time"
-        },
-        "improvements": {
-          "Technical Issue": "Please try again later"
-        }
-      });
-      
-      const readable = new ReadableStream({
-        start(controller) {
-          controller.enqueue(errorResponse);
-          controller.close();
-        },
-      });
-      
-      return new StreamingTextResponse(readable);
-    }
-    
     return new Response('Error generating response', { status: 500 });
   }
 }
