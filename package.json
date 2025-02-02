@@ -1,0 +1,41 @@
+{
+  "name": "interview-evaluator",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@google/generative-ai": "^0.21.0",
+    "@lottiefiles/react-lottie-player": "^3.5.3",
+    "@mui/icons-material": "^5.14.18",
+    "@mui/material": "^5.14.18",
+    "@vladmandic/face-api": "^1.7.14",
+    "ai": "^2.2.27",
+    "face-api.js": "^0.22.2",
+    "framer-motion": "^12.0.6",
+    "next": "14.0.2",
+    "openai": "^4.18.0",
+    "react": "^18",
+    "react-audio-voice-recorder": "^2.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-dom": "^18",
+    "react-text-transition": "^3.1.0",
+    "react-webcam": "^7.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.2",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0"
+  }
+}
