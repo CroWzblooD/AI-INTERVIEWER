@@ -17,19 +17,34 @@ export default function Page() {
   const { complete } = useCompletion({
     api: '/util/chatGPT',
     onFinish: (prompt, completion) => {
-      if (prompt.queryType == 'overall') {
+      try {
+        if (prompt.queryType === 'overall') {
+          setFeedback((prevFeedback) => ({
+            ...prevFeedback,
+            overall: completion || 'No feedback available',
+          }));
+        } else {
+          const parsedFeedback = JSON.parse(completion);
+          setFeedback((prevFeedback) => ({
+            ...prevFeedback,
+            [prompt.index]: parsedFeedback,
+          }));
+        }
+        setNumComplete((num) => num + 1);
+      } catch (error) {
+        console.error('Error processing feedback:', error);
         setFeedback((prevFeedback) => ({
           ...prevFeedback,
-          overall: completion,
+          [prompt.queryType === 'overall' ? 'overall' : prompt.index]: 
+            prompt.queryType === 'overall' 
+              ? 'Feedback unavailable at this time.'
+              : {
+                  strengths: { "Note": "Feedback unavailable" },
+                  improvements: { "Note": "Please try again later" }
+                }
         }));
-      } else {
-        setFeedback((prevFeedback) => ({
-          ...prevFeedback,
-          [prompt.index]: JSON.parse(completion),
-        }));
+        setNumComplete((num) => num + 1);
       }
-
-      setNumComplete((num) => num + 1);
     },
   });
 

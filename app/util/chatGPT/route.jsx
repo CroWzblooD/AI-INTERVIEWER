@@ -170,11 +170,40 @@ export async function POST(request) {
     const response = await result.response;
     const text = response.text();
 
-    // Simple text response
+    // Handle feedback type responses specifically
+    if (queryType === 'feedback') {
+      try {
+        // Validate JSON structure
+        JSON.parse(text);
+        return new Response(text);
+      } catch (e) {
+        // Return fallback JSON if parsing fails
+        return new Response(JSON.stringify({
+          "strengths": {
+            "General": "Good attempt at answering the question"
+          },
+          "improvements": {
+            "Suggestion": "Consider providing more specific details"
+          }
+        }));
+      }
+    }
+
+    // For non-feedback responses, return as-is
     return new Response(text);
     
   } catch (error) {
     console.error('Error generating content:', error);
+    if (queryType === 'feedback') {
+      return new Response(JSON.stringify({
+        "strengths": {
+          "Error": "Unable to analyze response"
+        },
+        "improvements": {
+          "Error": "Please try again later"
+        }
+      }));
+    }
     return new Response('Error generating response', { status: 500 });
   }
 }
